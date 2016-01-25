@@ -14,6 +14,19 @@ describe('chapter-thumbnail-template.js', function () {
         );
     });
 
+    it('should return the modified default template when receiving non JSON data.', function () {
+        expect(chapterThumbnailTemplate({
+            text: "example"
+        })).toBe(
+            `
+<div class="vjs-chapters-thumbnails-item">
+    <img class="vjs-chapters-thumbnails-item-image" src="" />
+    <span class="vjs-chapters-thumbnails-item-title">example</span>
+</div>
+`
+        );
+    });
+
     it('should return the modified default template.', function () {
         expect(chapterThumbnailTemplate({
             text: JSON.stringify({

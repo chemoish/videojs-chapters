@@ -10,9 +10,15 @@ const defaults = {
 };
 
 function chapterThumbnailTemplate(cue = {}, options = {}) {
-    let template = options.template || defaults.template;
+    let template = options.template || defaults.template,
+        cue_text = {};
 
-    let cue_text = JSON.parse(cue.text || '{}');
+    try {
+        cue_text = JSON.parse(cue.text);
+    } catch (e) {
+        // failed to parse JSON, fallback on raw text in title
+        cue_text = {title: cue.text, image: ''};
+    }
 
     for (let key in cue_text) {
         if (cue_text.hasOwnProperty(key)) {
