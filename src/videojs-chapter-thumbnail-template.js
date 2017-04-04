@@ -47,7 +47,7 @@ const defaults = {
  * chapterThumbnailTemplate({
  *   text: '{"title":"Hello World"}',
  * }, {
- *   template(cue) {
+ *   template(cue, textTrack) {
  *     let cueText;
  *
  *     // NOTE: if `cue.text` isn't parseable, just send it through instead of blowing up.
@@ -75,7 +75,7 @@ const defaults = {
 function chapterThumbnailTemplate(cue = {}, options = {}) {
   const template = options.template || defaults.template;
 
-  return template(cue);
+  return template(cue, options.textTrack);
 }
 
 export default chapterThumbnailTemplate;

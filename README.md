@@ -49,7 +49,7 @@ Type: `Function`
 Default:
 
 ```js
-template(cue = {}) {
+template(cue = {}, textTrack) {
   let cueText;
 
   // NOTE: if `cue.text` isn't parseable, just send it through instead of blowing up.
