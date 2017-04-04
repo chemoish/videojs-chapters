@@ -73,16 +73,19 @@ class ChapterThumbnailMenuButton extends VjsMenuButton {
 
     const tracks = this.player().remoteTextTracks() || [];
 
+    // Cleanup to create new menu
+    if (this.menu) {
+      this.removeChild(this.menu);
+      this.menu = null;
+    }
+
     this.items = [];
 
-    // cache menu during create menu dance
-    if (!this.menu) {
-      const Menu = videojs.getComponent('ChapterThumbnailMenu') || ChapterThumbnailMenu;
+    const Menu = videojs.getComponent('ChapterThumbnailMenu') || ChapterThumbnailMenu;
 
-      this.menu = new Menu(this.player(), {
-        name: CHAPTER_THUMBNAIL_MENU_NAME,
-      });
-    }
+    this.menu = new Menu(this.player(), {
+      name: CHAPTER_THUMBNAIL_MENU_NAME,
+    });
 
     for (let i = 0, length = tracks.length; i < length; i++) {
       track = tracks[i];
