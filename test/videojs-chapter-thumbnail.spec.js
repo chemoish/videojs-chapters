@@ -21,7 +21,11 @@ describe('chapter-thumbnail.js', () => {
 
     document.getElementById('video_fixture').innerHTML = video.outerHTML;
 
-    player = videojs(video);
+    player = videojs(video, {
+      html5: {
+        nativeTextTracks: false,
+      },
+    });
   });
 
   it('should initialize with defaults.', () => {

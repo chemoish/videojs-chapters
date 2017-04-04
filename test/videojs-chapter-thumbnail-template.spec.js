@@ -50,20 +50,31 @@ describe('chapter-thumbnail-template.js', () => {
   });
 
   it('should return a custom template.', () => {
-    expect(chapterThumbnailTemplate({
+    const template = chapterThumbnailTemplate({
       text: JSON.stringify({
         description: 'example description',
       }),
     }, {
-      template(cueText) {
+      template(cue) {
+        let cueText;
+
+        try {
+          cueText = JSON.parse(cue.text || '{}');
+        } catch (e) {
+          cueText = cue.text;
+        }
+
         const span = document.createElement('span');
+
         span.innerHTML = cueText.description;
 
         customTemplate.appendChild(span);
 
         return customTemplate;
       },
-    }).outerHTML).toBe(
+    });
+
+    expect(template.outerHTML).toBe(
       trim(`
         <div>
           <span>example description</span>
@@ -73,15 +84,25 @@ describe('chapter-thumbnail-template.js', () => {
   });
 
   it('should return an template for invalid JSON.', () => {
-    expect(chapterThumbnailTemplate({
+    const template = chapterThumbnailTemplate({
       text: 'example title',
     }, {
-      template(cueText) {
+      template(cue) {
+        let cueText;
+
+        try {
+          cueText = JSON.parse(cue.text || '{}');
+        } catch (e) {
+          cueText = cue.text;
+        }
+
         customTemplate.innerHTML = cueText;
 
         return customTemplate;
       },
-    }).outerHTML).toBe(
+    });
+
+    expect(template.outerHTML).toBe(
       trim(`
         <div>example title</div>
       `)
