@@ -132,6 +132,27 @@ class ChapterThumbnailMenuButton extends VjsMenuButton {
     for (let i = 0, length = textTrack.cues.length; i < length; i++) {
       const cue = textTrack.cues[i];
 
+      // This will be called repeatedly, so only try to set `cue.thumbnailData` if it hasn't been
+      // set yet.
+      if (textTrack.kind === 'metadata' && !cue.thumbnailData) {
+        try {
+          // Try to parse the text. This will throw if it isn't parseable, which means we don't want
+          // to change it.
+          JSON.parse(cue.text);
+
+          // Add thumbnail info to the cue. This is non-standard, but so are chapter thumbnails.
+          cue.thumbnailData = cue.text;
+
+          // Remove the text so nothing is displayed on screen when the thumbnail is active
+          cue.text = '';
+        } catch (error) {
+          // Filter out `SyntaxError`, throw on everything else.
+          if (typeof error !== SyntaxError) {
+            throw error;
+          }
+        }
+      }
+
       items.push(new MenuItem(this.player(), {
         cue,
         template,
