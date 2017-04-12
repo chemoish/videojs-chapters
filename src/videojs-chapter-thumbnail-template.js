@@ -1,19 +1,19 @@
 const defaults = {
   template(cue = {}) {
-    let cueText;
+    let cueThumbnailData;
 
-    // NOTE: if `cue.text` isn't parseable, just send it through instead of blowing up.
+    // NOTE: if `cue.thumbnailData` isn't parseable, just send it through instead of blowing up.
     // DRAGON: this probably opens up a possible script injection
     try {
-      cueText = JSON.parse(cue.text || '{}');
+      cueThumbnailData = JSON.parse(cue.thumbnailData || '{}');
     } catch (e) {
-      cueText = cue.text;
+      cueThumbnailData = cue.thumbnailData;
     }
 
     const {
       image,
       title,
-    } = cueText;
+    } = cueThumbnailData;
 
     const template = document.createElement('div');
     template.className = 'vjs-chapters-thumbnails-item';
