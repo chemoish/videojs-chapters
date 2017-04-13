@@ -62,9 +62,10 @@ export default class ChapterThumbnails {
     this.player = player;
 
     this.textTrack = videojs.mergeOptions(defaults, options, {
-      default: true,
-      kind: 'metadata',
+      default: false,
       id: TRACK_ID,
+      kind: 'metadata',
+      mode: 'disabled',
     });
 
     this.template = this.textTrack.template;
