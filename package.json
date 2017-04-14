@@ -57,6 +57,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-webpack": "^1.8.0",
     "load-grunt-tasks": "^3.5.2",
+    "lodash": "^4.17.4",
     "moment": "^2.14.1",
     "node-sass": "^3.8.0",
     "null-loader": "^0.1.1",
