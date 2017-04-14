@@ -1,5 +1,6 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const merge = require('lodash/merge');
 const path = require('path');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
@@ -19,6 +20,23 @@ webpackConfig.module.loaders = [{
   ),
   test: /\.scss$/,
 }];
+
+// Add `forceEnv: 'prod'` to all babel postLoaders
+webpackConfig.module.postLoaders = webpackConfig.module.postLoaders.map((loader) => {
+  if (loader.loader.indexOf('babel') !== 0) {
+    return loader;
+  }
+
+  return merge(
+    {},
+    loader,
+    {
+      query: {
+        forceEnv: 'production',
+      },
+    }
+  );
+});
 
 webpackConfig.plugins = [
   new CleanWebpackPlugin('dist', {
