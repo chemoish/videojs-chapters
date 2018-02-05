@@ -115,7 +115,9 @@ export default class ChapterThumbnails {
   }
 }
 
-videojs.plugin('chapter_thumbnails', function chapterThumbnails(options) {
+const registerPlugin = videojs.registerPlugin || videojs.plugin;
+
+registerPlugin('chapter_thumbnails', function chapterThumbnails(options) {
   const chapterThumbnail = new ChapterThumbnails(this, options);
 
   chapterThumbnail.addComponent();
